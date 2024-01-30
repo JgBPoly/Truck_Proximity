@@ -1,0 +1,133 @@
+a 55.0 370.0 n0 1 {Master's MAC addr}
+t 290.0 350.0 t2 0 w n
+t 285.0 470.0 {Wait end config} e 0 w n {} ne
+p 730.0 305.0 {Trigger reconfig} 0 n
+t 930.0 280.0 {Reconfig sent} n 0 w n {} ne
+t 925.0 175.0 {Init Config sent} n 0 w n {} ne
+a 700.0 550.0 n13 1 {-Msg type: 1\\n-Msg data: 0}
+a 670.0 180.0 n14 1 {-Msg type: 0\\n-Msg data: MAC addr}
+a 705.0 810.0 n12 1 {-Msg type: 2\\n-Msg data: 1}
+a 705.0 685.0 n11 1 {-Msg type: 2\\n-Msg data: 0}
+a 715.0 410.0 n19 1 {-Msg type: 0\\n-Msg data: 1}
+a 40.0 610.0 n2 1 {Sensor node ready to talk\\n-Msg type: 0\\n-Msg data: 1}
+a 1115.0 395.0 n15 1 {Slaves' MAC addr}
+t 1340.0 765.0 t8 0 w n
+p 1340.0 820.0 {Wait meas} 0 w
+t 1340.0 875.0 t37 0 w n
+p 1340.0 950.0 {Send meas to App} 0 e
+t 1155.0 760.0 t10 0 w n
+t 1340.0 1010.0 {Loop ask meas} e 0 w n {} ne
+p 740.0 860.0 {Msg Slave sleeping} 0 n
+p 235.0 50.0 {IDLE Slave (sensor)} 1 n
+t 235.0 115.0 {Wait end init} w 0 w n {} ne
+p 235.0 185.0 {Master known? (PROM)} 0 w
+t 190.0 250.0 yes w 0 w n {} ne
+p 190.0 345.0 {Load config (PROM -> var)} 0 w
+t 200.0 460.0 t3 0 w n
+t 290.0 225.0 no e 0 w n {} ne
+p 725.0 235.0 {Msg reconfig} 0 n
+p 290.0 410.0 {Save config (var & PROM)} 0 e
+p 245.0 525.0 {Inform master} 0 w
+t 245.0 575.0 {} w 0 w n {} ne
+p 745.0 460.0 {Msg Config done} 0 n
+p 235.0 630.0 {Wait response} 0 w
+t 535.0 405.0 {Reconfig rcv} n 0 w n {} ne
+p 290.0 290.0 {Wait config} 0 n
+a 285.0 620.0 n1 1 {Re ask config if no response}
+p 735.0 600.0 {Msg Start meas} 0 n
+t 235.0 685.0 {Master ready} w 0 w n {} ne
+p 235.0 750.0 {Measure dist} 0 w
+t 235.0 820.0 {Wait end measmt} w 0 w n {} ne
+p 520.0 940.0 {Msg meas} 0 n
+p 235.0 880.0 {Wait dt_meas} 0 w
+t 235.0 965.0 {Loop meas} w 0 w n {} ne
+p 740.0 740.0 {Msg Stop meas} 0 n
+t 400.0 680.0 {Master not ready} e 0 w n {} ne
+p 400.0 785.0 {Sleep Mode} 0 n
+t 405.0 845.0 t4 0 w n
+a 470.0 1010.0 n3 1 {-Msg type: 1\\n-Msg data: d\\n-Msg %battery: b}
+p 1155.0 705.0 {Stop meas} 0 n
+t 1240.0 415.0 t7 0 w n
+t 1240.0 105.0 {Wait init} e 0 w n {} ne
+t 1240.0 525.0 t6 0 w n
+p 1240.0 470.0 {Load addr} 0 w
+p 1240.0 580.0 {Config slaves} 0 w
+t 1230.0 645.0 {Config done} e 0 w n {} ne
+p 1340.0 710.0 {Ask meas} 0 e
+p 1240.0 160.0 {Connect App} 0 e
+t 1240.0 215.0 t5 0 w n
+p 1240.0 355.0 {Wait addrs} 0 n
+p 1665.0 100.0 {IDLE App} 0 n
+p 1240.0 50.0 {IDLE Master} 1 n
+t 1385.0 325.0 {msg: meas} n 0 w n {} ne
+a 1405.0 150.0 n6 1 {App: Envoie periodiquement la liste des MAC adrress a stream }
+p 1335.0 260.0 {Wait msg} 0 n
+t 1295.0 305.0 {msg: config} n 0 w n {} ne
+e {msg: meas} {Ask meas} 1 n
+e {Wait msg} {msg: meas} 1 n
+e {msg: config} {Wait addrs} 1 n
+e {Wait msg} {msg: config} 1 n
+e t5 {Wait msg} 1 n
+e t7 {Load addr} 1 n
+e {Config done} {Stop meas} 1 n
+e {Stop meas} t10 1 n
+e t37 {Send meas to App} 1 n
+e {Msg meas} t37 1 n
+e {Wait meas} t37 1 n
+e t8 {Wait meas} 1 n
+e {Wait end measmt} 0.8647093703 98.49365468 {Msg meas} 0.4898549367 94.19129471 1 n
+e {Ask meas} t8 1 n
+e {Config done} {Ask meas} 1 n
+e {Msg Config done} 0.9979981566 159.0125781 {Config done} 0.4262081912 136.4001466 1 n
+e {Config slaves} {Config done} 1 n
+e {Config slaves} 0.3926116438 153.6749816 {Init Config sent} 0.8232172449 123.8789732 1 n
+e {Config slaves} 0.4018330363 134.8480626 {Reconfig sent} 0.8855946523 106.3014581 1 n
+e {} {Msg Config done} 1 n
+e {Connect App} t5 1 n
+e {Wait init} {Connect App} 1 n
+e {IDLE Master} {Wait init} 1 n
+e {Inform master} {} 1 n
+e {Wait end init} {Master known? (PROM)} 1 n
+e {Wait addrs} t7 1 n
+e {Load addr} t6 1 n
+e t6 {Config slaves} 1 n
+e {Msg Stop meas} {Master ready} ?-1 n
+e {Master not ready} {Msg Slave sleeping} 1 n
+e {Reconfig sent} {Msg reconfig} 1 n
+e t10 {Msg Stop meas} 1 n
+e t8 0.3927565936 171.4788617 {Msg Start meas} 0.04429276638 182.0027472 5 n
+e {Sleep Mode} t4 1 n
+e t4 0.4812622788 93.64827815 {Wait response} 0.910053673 48.54894438 1 n
+e {Loop meas} 0.4757730619 178.058979 {Wait response} 0.5175044688 163.9908534 1 n
+e {Wait dt_meas} {Loop meas} 1 n
+e {Init Config sent} {Msg reconfig} 1 n
+e {Reconfig sent} {Trigger reconfig} 1 n
+e {Msg reconfig} t2 1 n
+e {Master not ready} {Sleep Mode} 1 n
+e {Trigger reconfig} {Reconfig rcv} 1 n
+e {Reconfig rcv} {Wait config} 1 n
+e {Wait response} {Reconfig rcv} 1 n
+e {Wait response} {Master not ready} 1 n
+e {Wait response} {Master ready} 1 n
+e {} {Wait response} 1 n
+e t3 {Inform master} 1 n
+e {Load config (PROM -> var)} t3 1 n
+e t2 {Save config (var & PROM)} 1 n
+e {Wait config} t2 1 n
+e no {Wait config} 1 n
+e {Msg Stop meas} {Master not ready} 1 n
+e {Msg Start meas} {Master ready} 1 n
+e {Wait end config} {Inform master} 1 n
+e {Save config (var & PROM)} {Wait end config} 1 n
+e {Master ready} {Measure dist} 1 n
+e {Wait end measmt} {Wait dt_meas} 1 n
+e {Measure dist} {Wait end measmt} 1 n
+e yes {Load config (PROM -> var)} 1 n
+e {Master known? (PROM)} no 1 n
+e {Master known? (PROM)} yes 1 n
+e {IDLE Slave (sensor)} {Wait end init} 1 n
+e {Loop ask meas} 0.0612117415 90.62008607 {Ask meas} 0.9464165383 84.7584804 1 n
+e {Send meas to App} {Loop ask meas} 1 n
+h state_machine
+
+
